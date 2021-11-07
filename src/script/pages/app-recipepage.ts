@@ -79,6 +79,7 @@ export class AppRecipepage extends LitElement {
     `;
   }
 
+  //create new recipe
   currentRecipe: Recipe = new Recipe();
 
   constructor() {
@@ -117,7 +118,8 @@ export class AppRecipepage extends LitElement {
 
     }
 
-  recipename: string = "";
+  //Create Recipe buttons
+  recipename: string = '';
 
   Defaultbuttons: string = "";
 
@@ -126,12 +128,12 @@ export class AppRecipepage extends LitElement {
 
       let sr: ShadowRoot | null = this.shadowRoot;
       if (sr) {
-        let loadText: HTMLElement = ((sr) as ShadowRoot).getElementById("loadText") as HTMLElement;
+        let loadText: HTMLElement = ((sr) as ShadowRoot).getElementById("loadTextRecipeButtons") as HTMLElement;
 
-        loadText.innerHTML = "";
+        loadText.innerHTML = "Result";
         for (let loadedRecipe of arrayRecipes) {
           this.recipename = loadedRecipe.title;
-          this.Defaultbuttons = '<br>' + '<button class="recipe"">' + this.recipename + '</button> <br>';
+          this.Defaultbuttons = '<br>' + '<button class="recipe"">' + this.recipename + '</button>';
 
           if (loadText) {
             loadText.innerHTML += this.Defaultbuttons;
@@ -148,19 +150,18 @@ export class AppRecipepage extends LitElement {
         <textarea name="Ingredients" cols="100" rows="5" style="resize: none;" class="textboxIngredient"
         overflow:auto></textarea>
         <textarea name="Directions" cols="100" rows="10" style="resize: none;" class="directions"></textarea>
-    </div> */
+    </div>
+  */
 
 
   render() {
     return html`
       <app-header enableBack="${true}"></app-header>
       <div>
-        <div style="width: 15%; float:left; height:600px; background-color: pink; border: none; margin:10px">
-            Recipes
-            <button class="loadbutton" @click=${this.printbuttons}>Load</button>
+        <div id="loadTextRecipeButtons" style="width: 15%; float:left; height:600px; background-color: pink; border: none; margin:10px">
+            Result
 
         </div>
-
         <div id="loadText" style="width: 50%; float:left; height:600px; background-color: white; border: 5px solid black; margin: 10px 170px">
             <textarea name="Title" cols="50" rows="1" style="resize: none;" id="middle"></textarea>
             <textarea name="Ingredients" cols="100" rows="5" style="resize: none;" class="textboxIngredient"
@@ -171,6 +172,7 @@ export class AppRecipepage extends LitElement {
         <div>
             <button class="newbutton" @click=${this.myFunction}>Add Recipe</button>
             <button class="savebutton" @click=${this.currentRecipe.saveToStorage}>Save Recipe</button>
+            <button class="loadbutton" @click=${this.printbuttons}>Load</button>
         </div>
 
       </div>
