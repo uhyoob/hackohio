@@ -128,50 +128,46 @@ export class AppRecipepage extends LitElement {
 
       let sr: ShadowRoot | null = this.shadowRoot;
       if (sr) {
-        let loadText: HTMLElement = ((sr) as ShadowRoot).getElementById("loadTextRecipeButtons") as HTMLElement;
-
-        loadText.innerHTML = "Result";
-        for (let loadedRecipe of arrayRecipes) {
-          this.recipename = loadedRecipe.title;
-          let Defaultbuttons: HTMLButtonElement = document.createElement("button");
-          Defaultbuttons.setAttribute("class", "recipe");
-          Defaultbuttons.innerText = this.recipename;
-          Defaultbuttons.addEventListener("click", this.buttons);
-
-          if (loadText) {
-            loadText.innerHTML += '<br>';
-            loadText.appendChild(Defaultbuttons);
-          }
-
+        for (let i = 0; i < arrayRecipes.length && i < 5; i++) {
+          let button: HTMLElement = ((sr) as ShadowRoot).getElementById("button" + (i + 1)) as HTMLElement;
+          button.innerHTML = arrayRecipes[i].title;
         }
       }
   }
 
-  ActiveTitle: string = "";
-  ActiveIngredients: string = "";
-  ActiveDescriptions: string = "";
+  activeTitle: string = "";
+  activeIngredients: string = "";
+  activeDescriptions: string = "";
 
   buttons(evt: any) {
-
-    console.log("hlep");
-
-    let sr: ShadowRoot | null = this.shadowRoot;
-    if (sr) {
-      let activeTitleElement: HTMLElement = ((sr) as ShadowRoot).getElementById("activeTitle") as HTMLElement;
-      let activeIngredientsElement: HTMLElement = ((sr) as ShadowRoot).getElementById("activeIngredients") as HTMLElement;
-      let activeDescriptionsElement: HTMLElement = ((sr) as ShadowRoot).getElementById("activeDescriptions") as HTMLElement;
-
-      let title: string = evt.target.value;
-      let newRecipeUnchecked: Recipe | null = Recipe.loadFromStorage(title)
-      if (newRecipeUnchecked) {
-        let newRecipe: Recipe = newRecipeUnchecked as Recipe;
-          activeTitleElement.textContent = newRecipe.title;
-          activeIngredientsElement.textContent = newRecipe.ingredients;
-          activeDescriptionsElement.textContent = newRecipe.directions;
-      }
+    let title: string = evt.target.innerHTML;
+    console.log(title);
+    let newRecipeUnchecked: Recipe | null = Recipe.loadFromStorage(title)
+    console.log(newRecipeUnchecked);
+    if (newRecipeUnchecked) {
+      let newRecipe: Recipe = newRecipeUnchecked as Recipe;
+      this.activeTitle = newRecipe.title;
+      this.activeIngredients = newRecipe.ingredients;
+      this.activeDescriptions = newRecipe.directions;
     }
+
   }
 
+  updateRecipe() {
+
+    let sr: ShadowRoot | null = this.shadowRoot;
+
+    if (sr) {
+
+      let activeTitleElement: HTMLElement = ((sr) as ShadowRoot).getElementById("activeTitle") as HTMLElement;
+      let activeIngredientsElement: HTMLElement = ((sr) as ShadowRoot).getElementById("activeIngredients") as HTMLElement;
+      let activeDescriptionsElement: HTMLElement = ((sr) as ShadowRoot).getElementById("activeDirections") as HTMLElement;
+
+      activeTitleElement.textContent = this.activeTitle;
+      activeIngredientsElement.textContent = this.activeIngredients;
+      activeDescriptionsElement.textContent = this.activeDescriptions;
+    }
+  }
 
 
   /* <div class="border">
@@ -189,6 +185,12 @@ export class AppRecipepage extends LitElement {
       <div>
         <div id="loadTextRecipeButtons" style="width: 15%; float:left; height:600px; background-color: pink; border: none; margin:10px">
             Result
+            <br>
+            <button class="recipe" @click=${this.buttons} id="button1">Recipe 1</button><br>
+            <button class="recipe" @click=${this.buttons} id="button2">Recipe 2</button><br>
+            <button class="recipe" @click=${this.buttons} id="button3">Recipe 3</button><br>
+            <button class="recipe" @click=${this.buttons} id="button4">Recipe 4</button><br>
+            <button class="recipe" @click=${this.buttons} id="button5">Recipe 5</button><br>
 
         </div>
         <div style="width: 50%; float:left; height:600px; background-color: white; border: 5px solid black; margin: 10px 170px">
@@ -202,7 +204,7 @@ export class AppRecipepage extends LitElement {
         </div>
 
         <div>
-            <button class="newbutton" @click=${this.myFunction}>Add Recipe</button>
+            <button class="newbutton" @click=${this.updateRecipe}>Update</button>
             <button class="savebutton" @click=${this.currentRecipe.saveToStorage}>Save Recipe</button>
             <button class="loadbutton" @click=${this.printbuttons}>Load</button>
         </div>
