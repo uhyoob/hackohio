@@ -37,6 +37,7 @@ export class AppRecipepage extends LitElement {
             width: 99%;
             font-family: "Century Gothic";
             height: 55%;
+            color: black;
         }
         .middle{
             width: 99%;
@@ -206,11 +207,11 @@ export class AppRecipepage extends LitElement {
             <center>Result</center>
 
         </div>
-        <div style="width: 50%; float:left; height:600px; background-color: white; border: 5px solid black; margin: 10px 170px">
+        <div style="width: 50%; color: black; float:left; height:600px; background-color: white; border: 5px solid black; margin: 10px 170px">
             <center>Title</center>
-            <textarea name="Title" id="activeTitle" cols="50" rows="1" style="resize: none;" class="middle"></textarea>
+            <textarea name="Title" id="activeTitle" cols="50" rows="1" style="resize: none; color: black;" class="middle"></textarea>
             <br>Ingredients
-            <textarea name="Ingredients" id="activeIngredients" cols="100" rows="5" style="resize: none;" class="textboxIngredient"
+            <textarea name="Ingredients" id="activeIngredients" cols="100" rows="5" style="resize: none; color: black;" class="textboxIngredient"
             overflow:auto></textarea>
             Directions
             <textarea name="Directions" id="activeDirections" cols="100" rows="10" style="resize: none;" class="directions" overflow:auto></textarea>
