@@ -56,6 +56,17 @@ export class AppRecipepage extends LitElement {
             bottom: 60px;
             right: 20px;
         }
+        .loadbutton {
+          border: 2px solid black;
+          background-color: #93E8FB;
+          color: white;
+          text-align: center;
+          font-size: 16px;
+          cursor: pointer;
+          position: absolute;
+          bottom: 100px;
+          right: 20px;
+        }
         .recipe {
             border: none;
             background-color: #ffffff;
@@ -94,20 +105,43 @@ export class AppRecipepage extends LitElement {
     '<textarea name="Directions" cols="100" rows="10" style="resize: none;" class="directions" overflow:auto @input=${this.onInputChangeDirections}>Directions</textarea>';
 
   myFunction() {
-    console.log("WORK!!!");
     let sr: ShadowRoot | null = this.shadowRoot;
 
         if (sr) {
-            console.log("BRRRRRRR");
             let loadText = ((sr) as ShadowRoot).getElementById("loadText");
 
             if (loadText) {
-                console.log("HELP");
                 loadText.innerHTML = this.DefaultTemplate;
             }
         }
 
     }
+
+  recipename: string = "";
+
+  Defaultbuttons: string = "";
+
+  printbuttons() {
+    let arrayRecipes: Recipe[] = Recipe.getAllRecipes();
+
+      let sr: ShadowRoot | null = this.shadowRoot;
+      if (sr) {
+        let loadText: HTMLElement = ((sr) as ShadowRoot).getElementById("loadText") as HTMLElement;
+
+        loadText.innerHTML = "";
+        for (let loadedRecipe of arrayRecipes) {
+          this.recipename = loadedRecipe.title;
+          this.Defaultbuttons = '<br>' + '<button class="recipe"">' + this.recipename + '</button> <br>';
+
+          if (loadText) {
+            loadText.innerHTML += this.Defaultbuttons;
+          }
+
+        }
+      }
+  }
+
+
 
   /* <div class="border">
         <textarea name="Title" cols="50" rows="1" style="resize: none;" id="middle"></textarea>
@@ -123,11 +157,8 @@ export class AppRecipepage extends LitElement {
       <div>
         <div style="width: 15%; float:left; height:600px; background-color: pink; border: none; margin:10px">
             Recipes
-            <br>
-            <button class="recipe"">Recipe 1.0</button> <br>
-            <button class="recipe"">Recipe 1.1</button> <br>
-            <button class="recipe"">Recipe 1.2</button> <br>
-            <button class="recipe"">Recipe 2.0</button> <br>
+            <button class="loadbutton" @click=${this.printbuttons}>Load</button>
+
         </div>
 
         <div id="loadText" style="width: 50%; float:left; height:600px; background-color: white; border: 5px solid black; margin: 10px 170px">
@@ -139,7 +170,7 @@ export class AppRecipepage extends LitElement {
 
         <div>
             <button class="newbutton" @click=${this.myFunction}>Add Recipe</button>
-            <button class="savebutton @click=${this.currentRecipe.saveToStorage}">Save Recipe</button>
+            <button class="savebutton" @click=${this.currentRecipe.saveToStorage}>Save Recipe</button>
         </div>
 
       </div>
