@@ -10,34 +10,46 @@ export class AppRecipepage extends LitElement {
             height: 600px;
             width: 50%;
             border: 5px solid black;
+            font-family: "Century Gothic";
             background-color: white;
             margin-left: 25%;
         }
         .borderside {
             height: 600px;
             width: 20%;
+            font-family: "Century Gothic";
             border: none;
-            background-color: pink;
+            background-color: #4d0000;
+        }
+        :host {
+          display: block;
+          background-color: black;
+          font-family: "Century Gothic";
+          color: white;
         }
         .textboxIngredient {
             width: 99%;
+            font-family: "Century Gothic";
             height: 29%;
             margin: -1px;
         }
         .directions{
             width: 99%;
+            font-family: "Century Gothic";
             height: 55%;
         }
         .middle{
             width: 99%;
             height: 3%;
+            font-family: "Century Gothic";
             margin-left: 0%;
             text-align: center;
         }
         .newbutton {
             border: 2px solid black;
-            background-color: #93E8FB;
+            background-color: #4d0000;
             color: white;
+            font-family: "Century Gothic";
             text-align: center;
             font-size: 16px;
             cursor: pointer;
@@ -47,9 +59,10 @@ export class AppRecipepage extends LitElement {
         }
         .savebutton {
             border: 2px solid black;
-            background-color: #93E8FB;
+            background-color: #4d0000;
             color: white;
             text-align: center;
+            font-family: "Century Gothic";
             font-size: 16px;
             cursor: pointer;
             position: absolute;
@@ -58,7 +71,7 @@ export class AppRecipepage extends LitElement {
         }
         .loadbutton {
           border: 2px solid black;
-          background-color: #93E8FB;
+          background-color: #4d0000;
           color: white;
           text-align: center;
           font-size: 16px;
@@ -66,13 +79,15 @@ export class AppRecipepage extends LitElement {
           position: absolute;
           bottom: 100px;
           right: 20px;
+          font-family: "Century Gothic";
         }
         .recipe {
             border: none;
-            background-color: #ffffff;
+            background-color: #4d0000;
             opacity: .4;
             font-size: 16px;
             cursor: pointer;
+            font-family: "Century Gothic";
 
         }
 
@@ -187,8 +202,8 @@ export class AppRecipepage extends LitElement {
     return html`
       <app-header enableBack="${true}"></app-header>
       <div>
-        <div id="loadTextRecipeButtons" style="width: 15%; float:left; height:600px; background-color: pink; border: none; margin:10px">
-            Result
+        <div id="loadTextRecipeButtons" style="width: 15%; float:left; height:600px; background-color: #4d0000; border: none; margin:10px">
+            <center>Result</center>
 
         </div>
         <div style="width: 50%; float:left; height:600px; background-color: white; border: 5px solid black; margin: 10px 170px">
