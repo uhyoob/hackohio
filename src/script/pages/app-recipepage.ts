@@ -21,17 +21,17 @@ export class AppRecipepage extends LitElement {
         }
         .textboxIngredient {
             width: 99%;
-            height: 34%;
+            height: 29%;
             margin: -1px;
         }
         .directions{
             width: 99%;
-            height: 58%;
+            height: 55%;
         }
-        #middle{
-            width: 56%;
+        .middle{
+            width: 99%;
             height: 3%;
-            margin-left: 22%;
+            margin-left: 0%;
             text-align: center;
         }
         .newbutton {
@@ -94,34 +94,34 @@ export class AppRecipepage extends LitElement {
     this.currentRecipe.directions = evt.target.value;
   }
 
-  inputIngredients = "";
   onInputChangeIngredients(evt: any) {
     this.currentRecipe.ingredients = evt.target.value;
   }
-
+  /*
   DefaultTemplate =
     '<textarea name="Title" cols="50" rows="1" style="resize: none;" id="middle" @input=${this.onInputChangeTitle}>Title</textarea>' +
     '<textarea name="Ingredients" cols="100" rows="5" style="resize: none;" class="textboxIngredient" overflow:auto' +
     '@input=${this.onInputChangeIngredients}>Ingredients\n1.\n2.\n3.\n4.\n5.\n6.\n7.\n8.\n9.\n10.\n11.\n12.</textarea>' +
     '<textarea name="Directions" cols="100" rows="10" style="resize: none;" class="directions" overflow:auto @input=${this.onInputChangeDirections}>Directions</textarea>';
+  */
 
   myFunction() {
     let sr: ShadowRoot | null = this.shadowRoot;
 
-        if (sr) {
-            let loadText = ((sr) as ShadowRoot).getElementById("loadText");
+      if (sr) {
+          let loadText = ((sr) as ShadowRoot).getElementById("loadText");
 
-            if (loadText) {
-                loadText.innerHTML = this.DefaultTemplate;
-            }
-        }
+          if (loadText) {
+              //loadText.innerHTML = this.DefaultTemplate;
+          }
+      }
 
-    }
+  }
+
+
 
   //Create Recipe buttons
   recipename: string = '';
-
-  Defaultbuttons: string = "";
 
   printbuttons() {
     let arrayRecipes: Recipe[] = Recipe.getAllRecipes();
@@ -133,14 +133,43 @@ export class AppRecipepage extends LitElement {
         loadText.innerHTML = "Result";
         for (let loadedRecipe of arrayRecipes) {
           this.recipename = loadedRecipe.title;
-          this.Defaultbuttons = '<br>' + '<button class="recipe"">' + this.recipename + '</button>';
+          let Defaultbuttons: HTMLButtonElement = document.createElement("button");
+          Defaultbuttons.setAttribute("class", "recipe");
+          Defaultbuttons.innerText = this.recipename;
+          Defaultbuttons.addEventListener("click", this.buttons);
 
           if (loadText) {
-            loadText.innerHTML += this.Defaultbuttons;
+            loadText.innerHTML += '<br>';
+            loadText.appendChild(Defaultbuttons);
           }
 
         }
       }
+  }
+
+  ActiveTitle: string = "";
+  ActiveIngredients: string = "";
+  ActiveDescriptions: string = "";
+
+  buttons(evt: any) {
+
+    console.log("hlep");
+
+    let sr: ShadowRoot | null = this.shadowRoot;
+    if (sr) {
+      let activeTitleElement: HTMLElement = ((sr) as ShadowRoot).getElementById("activeTitle") as HTMLElement;
+      let activeIngredientsElement: HTMLElement = ((sr) as ShadowRoot).getElementById("activeIngredients") as HTMLElement;
+      let activeDescriptionsElement: HTMLElement = ((sr) as ShadowRoot).getElementById("activeDescriptions") as HTMLElement;
+
+      let title: string = evt.target.value;
+      let newRecipeUnchecked: Recipe | null = Recipe.loadFromStorage(title)
+      if (newRecipeUnchecked) {
+        let newRecipe: Recipe = newRecipeUnchecked as Recipe;
+          activeTitleElement.textContent = newRecipe.title;
+          activeIngredientsElement.textContent = newRecipe.ingredients;
+          activeDescriptionsElement.textContent = newRecipe.directions;
+      }
+    }
   }
 
 
@@ -162,11 +191,14 @@ export class AppRecipepage extends LitElement {
             Result
 
         </div>
-        <div id="loadText" style="width: 50%; float:left; height:600px; background-color: white; border: 5px solid black; margin: 10px 170px">
-            <textarea name="Title" cols="50" rows="1" style="resize: none;" id="middle"></textarea>
-            <textarea name="Ingredients" cols="100" rows="5" style="resize: none;" class="textboxIngredient"
+        <div style="width: 50%; float:left; height:600px; background-color: white; border: 5px solid black; margin: 10px 170px">
+            <center>Title</center>
+            <textarea name="Title" id="activeTitle" cols="50" rows="1" style="resize: none;" class="middle"></textarea>
+            <br>Ingredients
+            <textarea name="Ingredients" id="activeIngredients" cols="100" rows="5" style="resize: none;" class="textboxIngredient"
             overflow:auto></textarea>
-            <textarea name="Directions" cols="100" rows="10" style="resize: none;" class="directions" overflow:auto></textarea>
+            Directions
+            <textarea name="Directions" id="activeDirections" cols="100" rows="10" style="resize: none;" class="directions" overflow:auto></textarea>
         </div>
 
         <div>
